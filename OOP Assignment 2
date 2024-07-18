@@ -1,0 +1,135 @@
+#include<iostream>
+#include<stdexcept>//header for exception
+using namespace std;
+//using multilevel inheritance
+class Election//base class
+{
+
+private:
+    string vote,voter_name,county;
+public:
+    int ID_NO,age;
+    void read()
+    try
+    {
+        cout<<"\n\n..WELCOME TO IEBC MANAGEMENT SYSTEM...\n\n";
+        cout<<"\n..ENTER VOTERS DETAILS..\n";
+        cout <<"Enter voter's name=";
+        cin >> voter_name;
+        cout <<"\n Enter voter's county=";
+        cin >> county;
+        cout <<"\nEnter voter's ID NO=";
+        cin >> ID_NO;
+        cout <<"\n Enter voters age=";
+        cin >>age;
+
+        if(age < 18)
+        {
+            throw runtime_error("\n Not Allowed to vote");//exception displays
+
+        }
+    }
+        catch(const runtime_error&adult)
+        {
+            cerr<<"Exception:"<<adult.what()<<endl;
+            //program ends if the voter is below 18 years
+            exit(0);
+        }
+
+
+};
+//derived class
+class Nationality:public Election
+{
+public:
+    string choice;
+    void capture()
+    {
+        read();
+        //choices only Kenyans are allowed to vote
+        cout<<"select the given options.\n";
+         cout <<" 1) voter is Kenyan:\n";
+        cout <<" 2)  Voter is Foreigner:\n";
+        cout<<"3) Exit.\n";
+        cout <<"Please Enter choice:\n";
+        cin >>choice;
+
+        if(choice == "1")
+        {
+            cout << "Voter is Kenyan Allowed to vote\n ";
+        }
+        else if(choice == "2")
+        {
+            cout << "Voter is Foreigner not Allowed to vote\n ";
+            exit(0);
+        }
+        else if(choice == "3")
+        {
+            //program ends if candidate does not want to vote
+            exit(0);
+        }
+        else
+
+        {
+            cout << "Invalid choice\n";
+        }
+
+    }
+};
+//derived class
+class President:public Nationality
+{
+public:
+   string choice;
+    void test()
+    {
+        capture();
+        cout<<"select political party:\n";//each political party is represented by a president
+        cout<<"1) UDA\n";
+        cout<<"2) AZIMIO\n";
+        cout<<"3) INDIPENDENT\n";
+        cout<<"Enter Choice:\n";
+        cin>>choice;
+        //candidate selects the party of desire and votes yes
+        //Each party is represented by one president
+
+        if(choice=="1"){
+            cout <<" Voted YES\n";
+        }
+        else if(choice == "2"){
+            cout <<"Voted YES\n";
+        }
+    else if(choice == "3"){
+            cout <<" Voted YES\n";
+        }
+        else
+        {
+            cout<<"Invalid choice. try again.\n";
+            //program ends if the choice is invalid
+            exit(0);
+        }
+    }
+};
+//derived class
+class Citizen:public President
+{
+public:
+    string Voted_successfully;
+    Citizen(){}//constructor call
+    //~represents deconstructors
+    ~Citizen(){}//destructor call
+    void display(){
+        test();
+    cout << "Voted successfully"<<endl;
+    }
+};
+int main()//main function
+{
+    //call fuction
+    class Citizen IEBC;
+    IEBC.display();
+
+
+}
+
+
